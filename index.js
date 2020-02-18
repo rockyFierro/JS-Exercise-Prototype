@@ -85,33 +85,49 @@ function Car(model, milesPerGallon) {
     this.tank = 0;
     this.odometer = 0;
 } //constructing cars, simple model
-Car.prototype.fill = function(gallons /*int*/ ) {
+Car.prototype.fill = function(gallons) {
     return this.tank += gallons;
 }; //a way to fill the gas tank up with no ceiling, basically a car in which someone snuck a bag of holding into the tank.
-/*
-/DONT FORGET TO COME BACK AND DO THE STRETCH GOALS FUTURE ME!
-/
-*/
+Car.prototype.drive = function(distance) {
+    if (this.tank > distance / this.milesPerGallon) {
+        this.odometer += distance;
+        this.tank = distance / this.milesPerGallon;
+    } else {
+        this.odometer += distance - 1;
+        this.tank *= 0 //this.tank / distance;
+        return `I ran out of fuel at ${this.odometer} miles`;
+    }
+}
 
-/*
-  TASK 3
-    - Write a Baby constructor subclassing Person.
-    - Besides `name` and `age`, Baby takes a third argument to initialize `favoriteToy`.
-    - Besides the methods on Person.prototype, babies have the ability to `.play()`:
-        + Should return a string "Playing with x", x being the favorite toy.
-*/
-function Baby() {
 
+// TASK 3
+//     -
+//     Write a Baby constructor subclassing Person. -
+//     Besides `name`
+// and `age`, Baby takes a third argument to initialize `favoriteToy`. -
+//     Besides the methods on Person.prototype, babies have the ability to `.play()`:
+//     +Should
+// return a string "Playing with x", x being the favorite toy.*/
+
+function Baby(name, age, favoriteToy) {
+    Person.call(this, name, age);
+    this.favoriteToy = favoriteToy;
+}
+Baby.prototype = Object.create(Person.prototype);
+
+Baby.prototype.play = function() {
+    return `Playing with ${this.favoriteToy}`
 }
 
 /* 
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+    where does THIS live? and who is talking to THIS?
+  1. is This global? oh boy, did you just call all of node?
+  2. is This inside a method? look to its parent object
+  3. is This inside a New? look at what is being created
+  4. is This being bound? look to the binding (whats inside its paranthesis)
 */
 
 
